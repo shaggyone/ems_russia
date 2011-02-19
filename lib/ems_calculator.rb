@@ -10,6 +10,13 @@ module EmsCalculator
       Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
         Rails.env.production? ? require(c) : load(c)
       end
+      
+      begin
+        c_model = Calculator::Ems
+        c_model.register if c_model.table_exists?
+      rescue Exception => e
+        $stderr.puts "Error registering calculator in Calculator::Ems"
+      end
     end
 
     config.to_prepare &method(:activate).to_proc
