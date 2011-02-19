@@ -1,5 +1,6 @@
+# coding: utf-8
 class Calculator::Ems < Calculator
-  preference :amount, :decimal, :default => 0
+  preference :from, :string, :default => 'city--sankt-peterburg'
   
   def self.description
     I18n.t("ems_shipping")
@@ -11,6 +12,21 @@ class Calculator::Ems < Calculator
   end
 
   def compute(object = nil)
-    self.preffered_amount
+    object.line_items.map(&:variant).map(&:weight).sum
+  end
+
+  def get_cities
+    json = ActiveSupport::JSON
+    http = Net::HTTP
+    
+    base_url = 'http://emspost.ru/api/rest/?method=ems.get.locations&type=cities&plain=true'
+    url = URL.parse base_url
+    resp = http.get( url)
+    jresp = j.decode resp
+    @cities = b['rsp']['locations'] if b['rsp']['stat'] == 'ok'
+  end
+  def get_city_names
+    get_cities unless @cities
+    @cities.map{|loc| loc['name']}
   end
 end
