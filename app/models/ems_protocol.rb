@@ -1,5 +1,7 @@
 # coding: utf-8
-class Ems
+#
+# Протокол работы с EMS
+class EmsProtocol
   require 'uri'
   J = ActiveSupport::JSON
   H = Net::HTTP
@@ -37,19 +39,16 @@ class Ems
     jsn = self.json args.extract_options!
     jsn and jsn['rsp'] and jsn['rsp']['stat']=='ok' ? jsn['rsp'] : nil
   end
-  #TODO Вынести в отдельный класс
-  #TODO Еще раз - задумайся о создании отдельного подкласса для хранения локейшнов
   
   def self.max_weight
-    #TODO see before, must verify response status
     @@max_weight ||=  if rsp = rsp(:method => :max_weight)
-        rsp['max_weight']
+        rsp['max_weight'].to_f
       end
   end
   def self.calculate *args
     options = args.extract_options!
     options[:method] = :calculate
-    rsp( options )#['price']
+    rsp( options )
   end
   def self.price *args
     result = self.calculate args.extract_options!

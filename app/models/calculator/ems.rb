@@ -1,4 +1,6 @@
 # coding: utf-8
+#
+# Калькулятор для EMS
 class Calculator::Ems < Calculator
   preference :from, :string, :default => 'Санкт-Петербург'
   
@@ -12,16 +14,17 @@ class Calculator::Ems < Calculator
   end
 
   def compute(object = nil)
-    city = object.ship_address.city 
+    Rails.logger.info{ "object : " + object.inspect }
+    city = object.address.city 
     weight = object.line_items.map(&:variant).map(&:weight).sum
 
-    if city && weight <= Ems.max_weight
+    if city && weight <= EmsProtocol.max_weight
       options = { 
         :weight => weight,
-        :from => Ems.value_by_name( prefered_from ),
-        :to => Ems.value_by_name(object.ship_address.city)
+        :from => EmsProtocol::Location.value_by_name( preferred_from ),
+        :to => EmsProtocol::Location.value_by_name(object.address.city)
       }
-      price = Ems.price( options)
+      price = EmsProtocol.price( options)
       price.nil? ? nil : BigDecimal.new(price)
     else
       nil

@@ -1,4 +1,4 @@
-class Ems::Location 
+class EmsProtocol::Location 
   def self.all
     unless class_variable_defined?('@@locations') # ugly, but don't now how more accurate verify
       js = js_request
@@ -43,7 +43,7 @@ class Ems::Location
   private
   #Template_method:
   def self.js_request
-    Ems.json(:method => :locations, :type => :all)
+    EmsProtocol.json(:method => :locations, :type => :all)
   end
   def self.cache_and_index locations
     @@locations = locations
