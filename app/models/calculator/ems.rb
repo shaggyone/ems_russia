@@ -1,6 +1,6 @@
 # coding: utf-8
 class Calculator::Ems < Calculator
-  preference :from, :string, :default => 'city--sankt-peterburg'
+  preference :from, :string, :default => 'Санкт-Петербург'
   
   def self.description
     I18n.t("ems_shipping")
@@ -12,21 +12,20 @@ class Calculator::Ems < Calculator
   end
 
   def compute(object = nil)
-    object.line_items.map(&:variant).map(&:weight).sum
+    city = object.ship_address.city 
+    weight = object.line_items.map(&:variant).map(&:weight).sum
+
+    if city && weight <= Ems.max_weight
+      options = { 
+        :weight => weight,
+        :from => Ems.value_by_name( prefered_from ),
+        :to => Ems.value_by_name(object.ship_address.city)
+      }
+      price = Ems.price( options)
+      price.nil? ? nil : BigDecimal.new(price)
+    else
+      nil
+    end
   end
 
-  def get_cities
-    json = ActiveSupport::JSON
-    http = Net::HTTP
-    
-    base_url = 'http://emspost.ru/api/rest/?method=ems.get.locations&type=cities&plain=true'
-    url = URL.parse base_url
-    resp = http.get( url)
-    jresp = j.decode resp
-    @cities = b['rsp']['locations'] if b['rsp']['stat'] == 'ok'
-  end
-  def get_city_names
-    get_cities unless @cities
-    @cities.map{|loc| loc['name']}
-  end
 end
