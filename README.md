@@ -1,13 +1,13 @@
 EmsCalculator
 =============
 
-Introduction goes here.
+EMSCalculator - gem for spree. For calculating delivery price in spree.
 
 
 Example
 =======
 
-Example goes here.
+Just add gem to Gemfile and all must work.
 
 
-Copyright (c) 2011 [name of extension creator], released under the New BSD License
+Copyright (c) 2011 Aleksandr Kozhukhovskiy, released under the New BSD License
