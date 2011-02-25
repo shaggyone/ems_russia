@@ -15,14 +15,22 @@ class Calculator::Ems < Calculator
 
   def compute(object = nil)
     Rails.logger.info{ "object : " + object.inspect }
-    city = object.address.city 
+    address = 
+      if object.is_a?(Order)
+        object.ship_address
+      elsif object.is_a?(Shipment)
+        object.address
+      else
+        nil
+      end
+    city = address.city
     weight = object.line_items.map(&:variant).map(&:weight).sum
 
     if city && weight <= EmsProtocol.max_weight
       options = { 
         :weight => weight,
         :from => EmsProtocol::Location.value_by_name( preferred_from ),
-        :to => EmsProtocol::Location.value_by_name(object.address.city)
+        :to => EmsProtocol::Location.value_by_name( city )
       }
       price = EmsProtocol.price( options)
       price.nil? ? nil : BigDecimal.new(price)
