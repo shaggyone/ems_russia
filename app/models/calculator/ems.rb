@@ -33,7 +33,7 @@ class Calculator::Ems < Calculator
         :to => EmsProtocol::Location.value_by_name( city )
       }
       price = EmsProtocol.price( options)
-      price.nil? ? nil : BigDecimal.new(price)
+      BigDecimal.new( price.nil? ? 0 : price)
     else
       nil
     end
