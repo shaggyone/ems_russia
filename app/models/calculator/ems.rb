@@ -24,13 +24,14 @@ class Calculator::Ems < Calculator
         nil
       end
     city = address.city
+    state_name = address.state_name
     weight = object.line_items.map(&:variant).map(&:weight).sum
 
-    if city && weight <= EmsProtocol.max_weight
+    if (city || state_name) && weight <= EmsProtocol.max_weight
       options = { 
         :weight => weight,
         :from => EmsProtocol::Location.value_by_name( preferred_from ),
-        :to => EmsProtocol::Location.value_by_name( city )
+        :to => EmsProtocol::Location.value_by_name(city) || EmsProtocol::Location.value_by_name(state_name)
       }
       price = EmsProtocol.price( options)
       BigDecimal.new( price.nil? ? "0.0" : price)
