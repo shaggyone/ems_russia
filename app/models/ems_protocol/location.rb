@@ -9,6 +9,15 @@ class EmsProtocol::Location
       @@locations
     end
   end
+
+  def self.all_regions
+    self.all_by_type 'regions'
+  end
+
+  def self.all_cities
+    self.all_by_type 'cities'
+  end
+
   def self.all_by_name name
     self.all # grant that locations cached and indexed
     @@locations_by_name[name]

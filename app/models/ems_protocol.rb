@@ -54,4 +54,21 @@ class EmsProtocol
     result = self.calculate args.extract_options!
     result.nil? ? nil : result['price'] 
   end
+
+  def self.compute_value(from, to, weight)
+    city = address.city
+    weight = object.line_items.map(&:variant).map(&:weight).sum
+
+    if city && weight <= EmsProtocol.max_weight
+      options = { 
+        :weight => weight,
+        :from   => from,
+        :to     => to
+      }
+      price = EmsProtocol.price( options)
+      BigDecimal.new( price.nil? ? "0.0" : price)
+    else
+      nil
+    end
+  end
 end
