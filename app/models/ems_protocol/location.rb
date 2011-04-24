@@ -1,3 +1,4 @@
+# coding: utf-8
 class EmsProtocol::Location 
   def self.all
     unless class_variable_defined?('@@locations') # ugly, but don't now how more accurate verify
@@ -37,10 +38,16 @@ class EmsProtocol::Location
       :@@locations_by_type ].each{ |v| remove_class_variable v}
     true
   end
+
+  def self.value_by_path(name)
+    name.gsub("Аобл", "АО").split(",").map(&:strip).map {|x| self.value_by_name(x)}.reject(&:blank?).first
+  end
+
   def self.value_by_name name
     location = self.all_by_name(name)
     location ? location['value'] : nil
   end
+
   def self.name_by_value value
     location = self.all_by_value(value)
     location ? location['name'] : nil
