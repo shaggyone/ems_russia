@@ -31,7 +31,7 @@ class Calculator::Ems < Calculator
       options = { 
         :weight => weight,
         :from => EmsProtocol::Location.value_by_name( preferred_from ),
-        :to => EmsProtocol::Location.value_by_name(city) || EmsProtocol::Location.value_by_name(state_name)
+        :to => EmsProtocol::Location.value_by_path(city) || EmsProtocol::Location.value_by_path(state_name)
       }
       price = EmsProtocol.price( options)
       BigDecimal.new( price.nil? ? "0.0" : price)
