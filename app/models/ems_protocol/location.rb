@@ -65,7 +65,7 @@ class EmsProtocol::Location
     @@locations = locations
     @@locations_by_name = {}
     @@locations_by_value = {}
-    @@locations_by_type  = {}
+    @@locations_by_type  = {'cities' => [], 'regions' => []}
     @@locations.each do |location|
       @@locations_by_name[location['name']] = location
       @@locations_by_value[location['value']] = location
