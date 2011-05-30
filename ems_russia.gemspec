@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_ems_calculator'
-  s.version     = '0.1.0'
+  s.name        = 'ems_russia'
+  s.version     = '0.0.1'
   s.summary     = 'EmsCalculator for calculating delivery price'
-  s.description = 'Originally written by Aleksandr Kozhukhovskiy aleksandr@kozhukhovskiy.ru'
+  s.description = 'Original protocol realization was extracted from spree_ems_calculator by Aleksandr Kozhukhovskiy aleksandr@kozhukhovskiy.ru'
   s.required_ruby_version = '>= 1.8.7'
 
-  s.author            = 'Aleksandr Vladislavovich Kozhukhovskiy'
+  s.author            = 'Victor Zagorski aka shaggyone'
   s.email             = 'victor@zagorski.ru'
   s.homepage          = 'zagorski.ru'
   s.rubyforge_project = ''
