@@ -1,8 +1,9 @@
 # coding: utf-8
 #
 # Протокол работы с EMS
+require 'uri'
+require 'net/http'
 class EmsProtocol
-  require 'uri'
   J = ActiveSupport::JSON
   H = Net::HTTP
   METHODS = {
@@ -56,10 +57,7 @@ class EmsProtocol
   end
 
   def self.compute_value(from, to, weight)
-    city = address.city
-    weight = object.line_items.map(&:variant).map(&:weight).sum
-
-    if city && weight <= EmsProtocol.max_weight
+    if weight <= EmsProtocol.max_weight
       options = { 
         :weight => weight,
         :from   => from,

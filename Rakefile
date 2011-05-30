@@ -1,31 +1,16 @@
-require File.expand_path('../../config/application', __FILE__)
-
 require 'rubygems'
 require 'rake'
 require 'rake/testtask'
 require 'rake/packagetask'
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
+require 'bundler'
+require 'rspec'
+require "rspec/core/rake_task"
 
-spec = eval(File.read('ems_calculator.gemspec'))
+Bundler.setup
+Bundler::GemHelper.install_tasks
 
-Rake::GemPackageTask.new(spec) do |p|
-  p.gem_spec = spec
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rspec_opts = ['--backtrace']
 end
-
-desc "Release to gemcutter"
-task :release => :package do
-  require 'rake/gemcutter'
-  Rake::Gemcutter::Tasks.new(spec).define
-  Rake::Task['gem:push'].invoke
-end
-
-desc "Default Task"
-task :default => [ :spec ]
-
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new
-
-# require 'cucumber/rake/task'
-# Cucumber::Rake::Task.new do |t|
-#   t.cucumber_opts = %w{--format pretty}
-# end
