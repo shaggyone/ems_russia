@@ -8,9 +8,7 @@ Developed with ruby_1.9.2, but must work with some other.
 Example
 =======
 
-    gem 'spree_ems_calculator',         :path => "../spree-ems-calculator", :require => "ems_calculator"
-
-Just add gem to Gemfile and all must work.
+    gem 'ems_russia', :git => "git://github.com/shaggyone/ems_russia.git", :require => "ems_russia"
 
 
-Copyright (c) 2011 Aleksandr Kozhukhovskiy, released under the New BSD License
+Copyright (c) 2011 Victor Zagorski
