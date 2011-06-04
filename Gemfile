@@ -10,10 +10,13 @@ group :test do
   gem 'rspec'
   gem 'rspec-rails', '>= 2.5.0'
   gem 'factory_girl', '>= 1.3.3'
+  gem 'spork', '~> 0.9.0.rc'
+  gem 'webrat','0.7.1'
   gem 'factory_girl_rails', '>= 1.0.1'
   gem 'rcov'
   gem 'shoulda'
   gem 'faker'
+
 #  gem 'celerity'
 #  gem 'culerity'
   if RUBY_VERSION < "1.9"

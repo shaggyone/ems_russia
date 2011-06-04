@@ -1,28 +1,44 @@
-$:.unshift File.expand_path('..', __FILE__)
-$:.unshift File.expand_path('../../lib/lib', __FILE__)
-
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../test_app/config/application", __FILE__)
-
-require 'rspec/rails'  
-
-require 'rails/all'
-require 'fileutils'
 require 'rubygems'
-require 'bundler'
-require 'rspec'
+require 'spork'
 
-#$show_err = true
-#$debug    = false
+Spork.prefork do
+  # Loading more in this block will cause your tests to run faster. However,
+  # if you change any configuration or code from libraries loaded here, you'll
+  # need to restart spork for it take effect.
 
+  # This file is copied to spec/ when you run 'rails generate rspec:install'
+  #$:.unshift File.expand_path('..', __FILE__)
 
-RSpec.configure do |config|
-  config.before :all do
+  $:.unshift File.expand_path('../../lib/lib', __FILE__)
+  ENV["RAILS_ENV"] ||= 'test'
+  require File.expand_path("../test_app/config/application", __FILE__)
+  require 'rspec/rails'
+
+  # Requires supporting ruby files with custom matchers and macros, etc,
+  # in spec/support/ and its subdirectories.
+  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
+  RSpec.configure do |config|
+    # == Mock Framework
+    #
+    # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+    #
+    # config.mock_with :mocha
+    # config.mock_with :flexmock
+    # config.mock_with :rr
+    config.mock_with :rspec
+
+    # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+    # config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+    # If you're not using ActiveRecord, or you'd prefer not to run each of your
+    # examples within a transaction, remove the following line or assign false
+    # instead of true.
+    # config.use_transactional_fixtures = true
   end
 
-  config.before :each do
-  end
-
-  config.after :each do
+  Spork.each_run do
+    # This code will be run each time you run your specs.
   end
 end
+

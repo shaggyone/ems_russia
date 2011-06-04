@@ -7,7 +7,7 @@ class EmsProtocol
   J = ActiveSupport::JSON
   H = Net::HTTP
   METHODS = {
-    :locations => 'ems.get.locations',
+    :locations  => 'ems.get.locations',
     :max_weight => 'ems.get.max.weight',
     :calculate  => 'ems.calculate'
   }

@@ -1,0 +1,9 @@
+---
+key_1: !ruby/object:EmsRussia::Cacher
+  key: key_1
+  value: data_1
+  expire_at: 3011-06-04T11:25:27+08:00
+key_2: !ruby/object:EmsRussia::Cacher 
+  key: key_2
+  value: data_2 
+  expire_at: 1970-06-04T11:25:27+08:00
