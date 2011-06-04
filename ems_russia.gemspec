@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
 
   s.author            = 'Victor Zagorski aka shaggyone'
   s.email             = 'victor@zagorski.ru'
-  s.homepage          = 'zagorski.ru'
+  s.homepage          = 'http://github.com/shaggyone/ems_russia'
   s.rubyforge_project = ''
 
-  s.files        = Dir['CHANGELOG', 'README.md', 'LICENSE', 'lib/**/*', 'app/**/*']
+  s.files        = Dir['CHANGELOG', 'README.md', 'LICENSE', 'lib/**/*']
   s.require_path = 'lib'
   s.requirements << 'none'
 
