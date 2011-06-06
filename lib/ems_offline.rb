@@ -123,6 +123,6 @@ private
   end
 
   def self.cacher
-    EmsRussia::Cacher
+    ::EmsRussia::Cacher
   end
 end
