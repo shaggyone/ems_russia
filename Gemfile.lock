@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ems_russia (0.0.1.a1)
+    ems_russia (0.0.1.a2)
 
 GEM
   remote: http://rubygems.org/
