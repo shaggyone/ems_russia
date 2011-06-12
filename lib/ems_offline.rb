@@ -69,8 +69,8 @@ class EmsOffline #< Ems
 
   def self.calc_price(from, to, weight)
     cacher.get(price_key(from, to, weight)) { 
-      Ems.calc_price(from, to, weight)
       sleep 2
+      Ems.calc_price(from, to, weight)
     }
   end
 
