@@ -11,7 +11,7 @@ Spork.prefork do
 
   $:.unshift File.expand_path('../../lib/lib', __FILE__)
   ENV["RAILS_ENV"] ||= 'test'
-  require File.expand_path("../test_app/config/application", __FILE__)
+  require File.expand_path("../test_app/config/environment", __FILE__)
   require 'rspec/rails'
 
   # Requires supporting ruby files with custom matchers and macros, etc,

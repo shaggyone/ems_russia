@@ -1,6 +1,11 @@
+require File.expand_path('../cacher_module.rb', __FILE__)
 require 'yaml'
+
 module EmsRussia
   class Cacher
+    include ::EmsRussia::CacherInstanceModule
+    extend  ::EmsRussia::CacherClassModule
+
     attr_accessor :value
     attr_accessor :expire_at
 
@@ -16,6 +21,40 @@ module EmsRussia
       end
     end
 
+    def self.get_cached(key)
+      contained_values[key]
+    end
+
+    def self.set_cached(key, value, expire_at)
+      a = (contained_values[key] ||= self.new(:key => key))
+      a.value     = value
+      a.expire_at = expire_at
+      a
+    end
+
+    def self.contained_values
+      @@cached_values ||= {}
+    end
+
+    def self.cached_values
+      contained_values
+    end
+
+    def self.clear_cache
+      @@cached_values = {}
+    end
+
+    def self.save_cache(filename)
+      File.open(filename, 'w') do |f|
+        YAML::dump(@@cached_values, f)
+      end
+    end
+
+  end
+end
+
+__END__
+
     def self.get(key, datetime = DateTime.now, &block)
       unless cached?(key)
         return nil unless block_given?
@@ -28,16 +67,6 @@ module EmsRussia
         end
       end
       cached_values[key].value
-    end
-
-    def self.clear_cache
-      @@cached_values = {}
-    end
-
-    def self.save_cache(filename)
-      File.open(filename, 'w') do |f|
-        YAML::dump(@@cached_values, f)
-      end
     end
 
     def expired?(datetime = DateTime.now)
@@ -58,8 +87,5 @@ module EmsRussia
                                       :expire_at => expire_at )
     end
 
-    def self.cached_values
-      @@cached_values ||= {}
-    end
   end
 end

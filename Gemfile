@@ -6,6 +6,7 @@ gemspec
 gem 'nokogiri'
 
 group :test do
+  gem 'sqlite3-ruby', :require => 'sqlite3'
   gem 'ZenTest'
   gem 'rspec'
   gem 'rspec-rails', '>= 2.5.0'
@@ -16,6 +17,7 @@ group :test do
   gem 'rcov'
   gem 'shoulda'
   gem 'faker'
+  gem 'rails', '>= 3.0.7'
 
 #  gem 'celerity'
 #  gem 'culerity'

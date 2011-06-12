@@ -1,6 +1,8 @@
 require 'ems_russia/cacher'
 require 'tempfile'
 
+require File.expand_path('../cacher_shared.rb', __FILE__)
+
 describe EmsRussia::Cacher do
   it { should respond_to(:expire_at) }
   it { should respond_to(:value) }
@@ -10,43 +12,11 @@ describe "EmsRussia::Cacher class" do
   subject { EmsRussia::Cacher }
   before { subject.clear_cache }
 
+  it_should_behave_like "ems_russia/cacher"
+
   it { should respond_to(:get) }
   it { should respond_to(:cache_value) }
   it { should respond_to(:cached_values) }
-
-  it "Should cache values, and clear cache correctly" do
-    subject.cached?("sample_key").should be_false
-    expect {
-      subject.cache_value "sample_key", "sample_value"
-    }.to change { subject.cached_values.size }.by(1)
-    subject.cached?("sample_key").should be_true
-    subject.clear_cache
-    subject.cached_values.size.should be == 0
-  end
-
-  it "Should expire values" do
-    subject.cache_value "sample_key", "sample_value", DateTime.now - 1.day
-    subject.expired?("sample_key").should be_true
-    subject.cached?("sample_key").should be_false
-    subject.get("sample_key").should be_nil
-  end
-
-  it "Should cache value, if needed" do
-    subject.cache_value "key", "cached_value"
-    subject.get("key"){ "recached_value" }.should == "cached_value"
-    subject.cache_value "key", "cached_value", DateTime.now - 1.day
-    subject.get("key"){ "recached_value" }.should == "recached_value"
-  end
-
-  it "Should customize expire_at" do
-    dt = DateTime.now + 10.years
-    subject.get("key"){|cacher| 
-      cacher.value = "new_value"
-      cacher.expire_at = dt; 
-      cacher
-    }.should be  == "new_value"
-    subject.cached_values["key"].expire_at.should be == dt
-  end
 
   it { should respond_to(:init) }
 
