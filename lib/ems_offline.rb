@@ -99,7 +99,7 @@ class EmsOffline #< Ems
     weights.each do |w|
       from.each do |f|
         to.each do |t|
-          puts "Caching #{f}-{#t}-#{w}"
+          puts "Caching #{f}-#{t}-#{w}"
           calc_price f, t, w
         end
       end
