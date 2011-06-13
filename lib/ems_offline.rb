@@ -77,7 +77,7 @@ class EmsOffline #< Ems
   def self.cache_data(options)
     self.cache_simple_data
     self.cache_prices options
-    self.cacher.cached_values.keys
+#   self.cacher.cached_values.keys
   end
 
   def self.cache_simple_data
@@ -89,7 +89,7 @@ class EmsOffline #< Ems
   end
 
   def self.cache_prices(options = {})
-    cacher.cached_values.delete_if { |key, value| key.to_s.starts_with? "price:" }
+#   cacher.cached_values.delete_if { |key, value| key.to_s.starts_with? "price:" }
     weights = options[:weights] || all_weights.first(3)
     from = options[:from] || "city--sankt-peterburg"
     to   = options[:to] || "city--krasnojarsk"
@@ -99,6 +99,7 @@ class EmsOffline #< Ems
     weights.each do |w|
       from.each do |f|
         to.each do |t|
+          puts "Caching #{f}-{#t}-#{w}"
           calc_price f, t, w
         end
       end
