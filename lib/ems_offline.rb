@@ -82,7 +82,7 @@ class EmsOffline #< Ems
 
   def self.cache_simple_data
     [:all, :all_cities, :all_regions, :max_weight].each do|method_name|
-      cacher.cached_values.delete method_name
+#     cacher.cached_values.delete method_name
       self.send method_name
       sleep 2
     end
