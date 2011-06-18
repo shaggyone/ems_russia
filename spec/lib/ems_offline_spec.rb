@@ -2,8 +2,8 @@
 require 'spec_helper'
 require 'ems_protocol'
 require 'ems_protocol/location'
-require 'ems'
-require 'ems_offline'
+require 'ems_protocol/ems'
+require 'ems_protocol/ems_offline'
 require 'ems_russia/cacher'
 
 require File.expand_path('../ems_calculator_shared', __FILE__)
@@ -11,7 +11,7 @@ require File.expand_path('../ems_calculator_shared', __FILE__)
 require 'pp'
 
 describe "ems offline calculator" do
-  subject {EmsOffline}
+  subject {EmsProtocol::EmsOffline}
   
   it "Print all names" do
 #    pp subject.all_by_name

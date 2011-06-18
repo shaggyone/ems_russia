@@ -1,4 +1,4 @@
-class Ems
+class EmsProtocol::Ems
   def self.all
     EmsProtocol::Location.all.map {|x| 
       {

@@ -2,8 +2,8 @@
 require 'spec_helper'
 require 'ems_protocol'
 require 'ems_protocol/location'
-require 'ems'
-require 'ems_offline'
+require 'ems_protocol/ems'
+require 'ems_protocol/ems_offline'
 
 shared_examples_for "ems calculator" do
   context "locations" do

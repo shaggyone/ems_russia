@@ -1,6 +1,6 @@
 # coding: utf-8
 require 'yaml'
-class EmsOffline #< Ems
+class EmsProtocol::EmsOffline #< Ems
   def self.load_yaml(filename)
     cacher.init :file => filename
   end
@@ -20,7 +20,7 @@ class EmsOffline #< Ems
     cacher.get(:all) {
       @@all_by_name = nil
       @@all_by_internal_name = nil
-      Ems.all
+      EmsProtocol::Ems.all
     }
   end
 
@@ -50,11 +50,11 @@ class EmsOffline #< Ems
   end
 
   def self.all_cities
-    cacher.get(:all_cities){Ems.all_cities}
+    cacher.get(:all_cities){EmsProtocol::Ems.all_cities}
   end
 
   def self.all_regions
-    cacher.get(:all_regions){Ems.all_regions}
+    cacher.get(:all_regions){EmsProtocol::Ems.all_regions}
   end
 
   def self.all_weights
@@ -64,13 +64,13 @@ class EmsOffline #< Ems
   end
 
   def self.max_weight
-    cacher.get(:max_weight){Ems.max_weight}
+    cacher.get(:max_weight){EmsProtocol::Ems.max_weight}
   end
 
   def self.calc_price(from, to, weight)
     cacher.get(price_key(from, to, weight)) { 
       sleep 2
-      Ems.calc_price(from, to, weight)
+      EmsProtocol::Ems.calc_price(from, to, weight)
     }
   end
 
